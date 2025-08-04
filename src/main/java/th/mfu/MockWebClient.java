@@ -34,6 +34,8 @@ public class MockWebClient {
 
         // Close the socket
         socket.close();
+
+        
     }
     catch (IOException e) {
         System.out.println("Error closng resouces");

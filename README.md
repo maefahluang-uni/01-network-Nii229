@@ -53,10 +53,8 @@ Think about the following,  modify the code to experiment it and put your though
 - What would be the benefit of running many instances?
 
 ```
-1. pass different port number to the constructer 
-  - new MockWebServer(8082)
-2. create and start additional threads
-  - new Thread(new MockWebServer(8082)).start();
+1. pass different port number to the constructer - new MockWebServer(8082)
+2. create and start additional threads - new Thread(new MockWebServer(8082)).start();
 3. moddify response string 
 4. to simulate different services
 ```

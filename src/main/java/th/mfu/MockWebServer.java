@@ -15,33 +15,34 @@ public class MockWebServer implements Runnable {
     public void run() {
 
         // TODO Create a server socket bound to specified port
-        try (ServerSocket serverSocket = new ServerSocket(webport)){
+        try (ServerSocket serverSocket = new ServerSocket(port)){
             System.out.println("Mock Web Server running on port " + port + "...");
+        
+        while (true) {
+            // TODO Accept incoming client connections
+            Socket clientSocket = serverSocket.accept();
 
-            while (true) {
-                // TODO Accept incoming client connections
-                Socket clientSocket = serverSocket.accept();
+            // TODO Create input and output streams for the client socket
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-                // TODO Create input and output streams for the client socket
-                BufferedReader input = new BufferedReader (new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter output = new PrintWriter (clientSocket.getOutputStream());
+            // TODO: Read the request from the client using BufferedReader
+            String request = in.readLine();
+            System.out.println("Received from client: " + request);             
 
-                // TODO: Read the request from the client using BufferedReader
-                String line=in.readLine();
-                System.out.println("Request : " + line);
+            // TODO: send a response to the client
+            String response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
+                    + "<html><body>Hello, Web! on Port " + port + "</body></html>";
+            out.println(response);
 
-                // TODO: send a response to the client
-                String response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
-                        + "<html><body>Hello, Web! on Port " + port + "</body></html>";
-                System.out.println(response);
-
-                // TODO: Close the client socket
-                clientSocket.close();
-            }
-        }
-        catch (IOException){
+            // TODO: Close the client socket
+            clientSocket.close();
+        } 
+    }catch (IOException e) {
+            System.err.println("Error in MockWebServer: " + e.getMessage());
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args) {

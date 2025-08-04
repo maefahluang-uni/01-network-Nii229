@@ -15,7 +15,8 @@ public class MockWebServer implements Runnable {
     public void run() {
 
         // TODO Create a server socket bound to specified port
-        try (ServerSocket serverSocket = new ServerSocket(port)){
+        try{ 
+            ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Mock Web Server running on port " + port + "...");
         
         while (true) {
@@ -49,7 +50,7 @@ public class MockWebServer implements Runnable {
         Thread server1 = new Thread(new MockWebServer(8080));
         server1.start();
 
-        Thread server2 = new Thread(new MockWebServer(8081));
+        Thread server2 = new Thread(new MockWebServer(8080));
         server2.start();
 
         // type any key to stop the server
